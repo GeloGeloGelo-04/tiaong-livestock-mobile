@@ -54,7 +54,7 @@ const VerifyEmailScreen = ({ route }) => {
           <Text style={{ fontSize: 24, fontWeight: "500", marginBottom: 8 }}>
             Verify your code
           </Text>
-          <Text style={{}}>We have sent a code to your email.</Text>
+          <Text style={{}}>Check your email for the One-Time-Password &#40;OTP&#41;.</Text>
           <Text style={{ color: "#007bff", fontWeight: "bold" }}>
             Your email is: {email || ""}
           </Text>

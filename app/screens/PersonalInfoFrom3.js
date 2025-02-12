@@ -21,6 +21,10 @@ const PersonalInfoFrom3 = () => {
   const [memberIsCollapse, setMemberIsCollapse] = useState(true);
 
   const handlePressNextBtn = () => {
+    if (!validatePhoneNumber(userData.contactPersonToNotifyInCaseEmergency)) {
+      setErrMsg("Please enter a valid phone number.");
+      return;
+    }
     if (
       !userData.education ||
       !userData.PWD ||
@@ -49,6 +53,11 @@ const PersonalInfoFrom3 = () => {
   useEffect(() => {
     setErrMsg("");
   }, [userData]);
+
+  const validatePhoneNumber = (phoneNumber) => {
+    const phRegex = /^(09|\+639)\d{9}$/; // Matches 09xxxxxxxxx or +639xxxxxxxxx
+    return phRegex.test(phoneNumber);
+  };
 
   return (
     <View
@@ -208,6 +217,7 @@ const PersonalInfoFrom3 = () => {
           label="Contact Number"
           disabled={disabled}
           value={userData.contactPersonToNotifyInCaseEmergency}
+          errMsg={!validatePhoneNumber(userData.contactPersonToNotifyInCaseEmergency) && userData.contactPersonToNotifyInCaseEmergency ? "Invalid number" : ""}
           inputMode="tel"
           onChangeText={(value) =>
             setUserData((prev) => ({

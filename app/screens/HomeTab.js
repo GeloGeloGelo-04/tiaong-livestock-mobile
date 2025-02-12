@@ -48,7 +48,6 @@ const HomeTab = () => {
             "/analytics/total-livestock-mortality",
             { id: auth?.id }
           );
-
           setLivestockPiechartData(response.data);
         } catch (error) {
           console.log(error);

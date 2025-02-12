@@ -23,6 +23,10 @@ const PersonalInfoFrom2 = () => {
   console.log(userData?.birthDate);
   console.log(typeof new Date(userData?.birthDate));
   const handlePressNextBtn = () => {
+    if (!validatePhoneNumber(userData.contactNo)) {
+      setErrMsg("Please enter a valid phone number.");
+      return;
+    }
     if (
       !userData.contactNo ||
       !userData.birthDate ||
@@ -47,6 +51,12 @@ const PersonalInfoFrom2 = () => {
   useEffect(() => {
     setErrMsg("");
   }, [userData]);
+
+  const validatePhoneNumber = (phoneNumber) => {
+    const phRegex = /^(09|\+639)\d{9}$/; // Matches 09xxxxxxxxx or +639xxxxxxxxx
+    return phRegex.test(phoneNumber);
+  };
+
 
   return (
     <ScrollView
@@ -77,17 +87,19 @@ const PersonalInfoFrom2 = () => {
               {errMsg}
             </Text>
           )}
-
           <InputField
             disabled={disabled}
             label="Contact No"
             value={userData.contactNo}
             inputMode="tel"
+            errMsg={!validatePhoneNumber(userData.contactNo) && userData.contactNo ? "Invalid number" : ""}
             onChangeText={(value) =>
-              setUserData((prev) => ({ ...prev, contactNo: value }))
+              setUserData((prev) => ({
+                ...prev,
+                contactNo: value,
+              }))
             }
           />
-
           <DatePicker
             label={"Date of Birth"}
             date={

@@ -44,6 +44,34 @@ const LivestockScreen = () => {
     setCount(0);
   }, [livestock]);
 
+  useEffect(() => {
+    getLivestockAndMortality();
+  }, []);
+  
+  const getLivestockAndMortality = async () => {
+    try {
+      const response = await axios.post("/analytics/total-livestock-mortality", {
+        id: auth?.id,
+      });
+  
+      let livestockData = response.data.find((item) => item.name === "Livestocks");
+      let mortalityData = response.data.find((item) => item.name === "Mortality");
+  
+      let adjustedPopulation = (livestockData?.population || 0) - (mortalityData?.population || 0);
+  
+      console.log([
+        {
+          ...livestockData,
+          population: adjustedPopulation < 0 ? 0 : adjustedPopulation, // Ensure it doesn't go negative
+        },
+        mortalityData,
+      ]);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  
+   
   const handleAddLivestock = async () => {
     setDisabled(true);
     try {
