@@ -103,8 +103,13 @@ const ChangePassScreen = ({ route }) => {
       <AlertModal
         visible={modalShow}
         onClose={() => {
-          navigate.dispatch(StackActions.replace("LoginScreen"));
-          setModalShow(false);
+          // navigate.dispatch(StackActions.replace("LoginScreen"));
+          // setModalShow(false);
+          navigate.reset({
+            index: 0,
+            routes: [{ name: "LoginScreen" }],
+          });
+
         }}
         content="Your password has been updated. Thank you for your effort!"
       />
